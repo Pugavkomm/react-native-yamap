@@ -58,7 +58,7 @@
 #else
     self = [super initWithFrame:CGRectZero];
 #endif
-
+    
     _reactSubviews = [[NSMutableArray alloc] init];
     masstransitRouter = [[YMKTransportFactory instance] createMasstransitRouter];
     drivingRouter = [[YMKDirectionsFactory instance] createDrivingRouterWithType:YMKDrivingRouterTypeOnline];
@@ -87,6 +87,15 @@
     [self.mapWindow.map setMapLoadedListenerWithMapLoadedListener:self];
     initializedRegion = NO;
     return self;
+}
+
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    
+    self.frame = [UIScreen mainScreen].bounds;
+    [self setNeedsLayout];
+    [self layoutIfNeeded];
 }
 
 - (NSDictionary*)convertDrivingRouteSection:(YMKDrivingRoute*)route withSection:(YMKDrivingSection*)section {
