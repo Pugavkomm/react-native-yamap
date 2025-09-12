@@ -151,11 +151,14 @@
 }
 
 - (void)setSource:(NSString*)_source {
+    NSLog(@"[YamapMarkerView] setSource called with: '%@'", _source);
     source = _source;
     [self updateMarker];
 }
 
 - (void)setMapObject:(YMKPlacemarkMapObject *)_mapObject {
+    NSLog(@"[YamapMarkerView] setMapObject called with mapObject: %@", _mapObject);
+
     mapObject = _mapObject;
     [mapObject addTapListenerWithTapListener:self];
     [self updateMarker];
@@ -211,12 +214,16 @@
     });
 }
 
-- (void)insertReactSubview:(UIView*)subview atIndex:(NSInteger)atIndex {
+- (void)insertReactSubview:(UIView*)subview  atIndex:(NSInteger)atIndex {
+    NSLog(@"[YamapMarkerView] insertReactSubview: %@ atIndex: %ld", subview, (long)atIndex);
+
     [_reactSubviews insertObject:subview atIndex: atIndex];
     [super insertReactSubview:subview atIndex:atIndex];
 }
 
 - (void)removeReactSubview:(UIView*)subview {
+    NSLog(@"[YamapMarkerView] removeReactSubview: %@", subview);
+
     [_reactSubviews removeObject:subview];
     [super removeReactSubview: subview];
 }
@@ -273,6 +280,10 @@
     } @catch (NSException *exception) {
         NSLog(@"Reason: %@ ",exception.reason);
     }
+}
+
+- (void)dealloc {
+    NSLog(@"[YamapMarkerView] DEALLOCATED for point: %f, %f", _point.latitude, _point.longitude);
 }
 
 @synthesize reactTag;
