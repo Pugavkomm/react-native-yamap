@@ -771,6 +771,11 @@
 }
 
 - (void)insertReactSubview:(UIView<RCTComponent> *)subview atIndex:(NSInteger)atIndex {
+    // Skip insertion if subview is nil
+    if (!subview) {
+        NSLog(@"Skip insertion, because subview is nil");
+        return;
+    }
     if ([subview isKindOfClass:[YamapPolygonView class]]) {
         YMKMapObjectCollection *objects = self.mapWindow.map.mapObjects;
         YamapPolygonView *polygon = (YamapPolygonView *) subview;
