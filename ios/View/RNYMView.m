@@ -114,13 +114,17 @@
     }
 }
 
-- (void)layoutSubviews {
-    [super layoutSubviews];
-    
-    self.frame = [UIScreen mainScreen].bounds;
-    
-    [self setNeedsLayout];
-    [self layoutIfNeeded];
+- (void)didMoveToWindow {
+ [super didMoveToWindow];
+
+ if (self.mapWindow != nil && self.mapWindow.map != nil) {
+  [self.mapWindow.map setMapLoadedListenerWithMapLoadedListener:self];
+ }
+ dispatch_async(dispatch_get_main_queue(), ^{
+  self.frame = self.superview.bounds;
+  [self setNeedsLayout];
+  [self layoutIfNeeded];
+ });
 }
 
 - (NSDictionary*)convertDrivingRouteSection:(YMKDrivingRoute*)route withSection:(YMKDrivingSection*)section {
