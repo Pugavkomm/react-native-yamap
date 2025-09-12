@@ -92,6 +92,27 @@
     return self;
 }
 
+- (void)didMoveToSuperview {
+    [super didMoveToSuperview];
+    if (self.superview) {
+        NSLog(@"Setup initial frame");
+        NSLog(@"Initial map frame: %@", NSStringFromCGRect(self.mapFrame));
+        NSLog(@"Final map frame: %@", NSStringFromCGRect(self.frame));
+        
+        self.mapFrame = self.superview.bounds;
+        self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (self.mapWindow != nil && self.mapWindow.map != nil) {
+                NSLog(@"[RNYMView] didMoveToSuperview -> attaching mapLoadedListener");
+                [self.mapWindow.map setMapLoadedListenerWithMapLoadedListener:self];
+                [self setNeedsLayout];
+                [self layoutIfNeeded];
+            }
+        });
+        
+    }
+}
 
 - (void)layoutSubviews {
     [super layoutSubviews];
