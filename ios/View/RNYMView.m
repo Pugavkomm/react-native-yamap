@@ -807,6 +807,7 @@
     
     [_reactSubviews insertObject:subview atIndex:atIndex];
     [super insertReactSubview:subview atIndex:atIndex];
+    [self setNeedsLayout];
 }
 
 - (void)insertMarkerReactSubview:(UIView<RCTComponent> *) subview atIndex:(NSInteger) atIndex {
