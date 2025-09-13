@@ -801,8 +801,12 @@
         for (int i = 0; i < childSubviews.count; i++) {
             [self insertReactSubview:(UIView *)childSubviews[i] atIndex:atIndex];
         }
-        
+        // prevent insering the container view itself
+        return;
     }
+    
+    [_reactSubviews insertObject:subview atIndex:atIndex];
+    [super insertReactSubview:subview atIndex:atIndex];
 }
 
 - (void)insertMarkerReactSubview:(UIView<RCTComponent> *) subview atIndex:(NSInteger) atIndex {
